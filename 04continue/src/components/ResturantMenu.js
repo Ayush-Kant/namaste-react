@@ -1,58 +1,81 @@
-import { useEffect, useState } from "react";
-import Shimmer from "./Shimmer";
-import { CDN_URL } from "../utils/constants";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
+
+import Shimmer from "./Shimmer";
 import RestaurantMenuHeader from "./RestaurantMenuHeader";
+import RestaurantCategory from "./RestaurantCategory";
+
 import useRestaurantInfo from "../utils/useRestaurantInfo";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
-import { useParams } from "react-router-dom";
-import ItemListMenu from "./ItemListMenu";
-import RestaurantCategory from "./RestaurantCategory";
 
 const ResturantMenu = () => {
 
-         const { resId } = useParams();
-            // console.log(resId);
-    
-    const restaurant = useRestaurantInfo(resId);
-    const menu = useRestaurantMenu(resId);
-    const [showIndex,setShowIndex] = useState(0);
-    const [showItems,setShowItems] = useState(true);
-    
+  const { resId } =
+    useParams();
 
-    console.log("restaurant", restaurant);
-console.log("menu", menu);
+  const restaurant =
+    useRestaurantInfo(resId);
 
-    if(!menu || !restaurant){
+  const menu =
+    useRestaurantMenu(resId);
 
-        return <Shimmer />;
+  const [
+    showIndex,
+    setShowIndex,
+  ] = useState(0);
 
-    }
+  if (
+    !restaurant ||
+    !menu
+  ) {
+    return <Shimmer />;
+  }
 
-    return (
+  return (
+    <div>
 
-        <div>
-            <div className="my-8 py-8 flex w-100% bg-orange-100 ">
-                {
-                
-                <RestaurantMenuHeader {...restaurant.info} />
-                }
-                </div>
-            
+      <div
+        className="
+          my-8
+          py-8
+          flex
+          w-full
+          bg-orange-100
+        "
+      >
+        <RestaurantMenuHeader
+          {...restaurant.info}
+        />
+      </div>
 
-            {
-                menu.map((category, index) => (
-                    <RestaurantCategory
-                        key={category.categoryId || category.title}
-                        category={category}
-                        showItems = {index===showIndex? true : false}
-                        setShowIndex={()=> setShowIndex(index)}
+      {
+        menu.map(
+          (
+            category,
+            index
+          ) => (
+            <RestaurantCategory
+              key={
+                category.categoryId ||
+                category.title
+              }
+              category={category}
+              showItems={
+                index ===
+                showIndex
+              }
+              setShowIndex={() =>
+                setShowIndex(
+                  index
+                )
+              }
+            />
+          )
+        )
+      }
 
-                    />
-                ))
-            }
+    </div>
+  );
+};
 
-        </div>
-    )
-}
 export default ResturantMenu;

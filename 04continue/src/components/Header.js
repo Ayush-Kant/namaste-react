@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
 import ProfileBadge from "./ProfileBadge";
-
+import LocationSearch from "./LocationSearch";
 
 const Header = () =>{
     //let btnName = "Login"
@@ -30,6 +30,7 @@ const Header = () =>{
                     <li className="p-2 m-2">Cart</li>
                     <li className="p-2 m-2"><Link to="/about">About</Link></li>
                     <li className="p-2 m-2">Contact us</li>
+                    <LocationSearch/>
                     <button className="py-1 px-2 m-2 border-[1px] border-solid border-gray-300 bg-gray-200 rounded-md hover:bg-gray-300"
                      onClick={()=>{
                         // btnName = "Logout";

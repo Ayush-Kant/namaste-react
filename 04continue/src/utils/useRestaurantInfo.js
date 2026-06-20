@@ -1,23 +1,28 @@
-import { useState, useEffect } from "react";
-import useRestaurants from "./useRestaurants";
-    
-   
-    const useRestaurantInfo = (resId)=>{
-    //   const [restaurantInfo, setRestaurantInfo] = useState(null);
-    //   useEffect(() => {
-    //     fetchMenu();
-    // }, [resId]);
-    const restaurants = useRestaurants();
-    // const fetchMenu = async () => {
-        
-        const restaurantInfo =restaurants
-        .find(
-            (res)=>String(res?.info?.id)===String(resId)
-        );
-    //     setRestaurantInfo(restaurant);
-         
-    // }
-    return restaurantInfo;
-}
+import { useMemo } from "react";
+import useRestaurantData from "./useRestaurantData";
+
+const useRestaurantInfo = (resId) => {
+
+  const {
+    allRestaurants,
+  } = useRestaurantData();
+
+  const restaurant =
+    useMemo(() => {
+
+      return allRestaurants.find(
+        (restaurant) =>
+          String(
+            restaurant?.info?.id
+          ) === String(resId)
+      );
+
+    }, [
+      allRestaurants,
+      resId,
+    ]);
+
+  return restaurant;
+};
 
 export default useRestaurantInfo;
